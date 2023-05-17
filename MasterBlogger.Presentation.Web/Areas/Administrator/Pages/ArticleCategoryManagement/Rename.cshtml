@@ -1,0 +1,29 @@
+﻿@page "{id:long}"
+@model MasterBlogger.Presentation.Web.Areas.Administrator.Pages.ArticleCategoryManagement.RenameModel
+@{
+    ViewData["Title"] = "Rename Article Category";
+}
+
+<div class="card">
+    <div class="card-header badge-primary">
+        <h1>Rename Article Category : @Model.ArticleCategory.Title</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <input type="hidden" asp-for="ArticleCategory.Id"/>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ArticleCategory.Title" class="col-form-label">Title</label>
+                        <input asp-for="ArticleCategory.Title" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Rename" class="btn btn-primary"/>
+                        <a class="btn btn-secondary" asp-page="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

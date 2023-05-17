@@ -1,0 +1,28 @@
+﻿@page
+@model MasterBlogger.Presentation.Web.Areas.Administrator.Pages.ArticleCategoryManagement.CreateModel
+@{
+    ViewData["Title"] = "Create Article Category";
+}
+
+<div class="card">
+    <div class="card-header badge-success">
+        <h1>Create New Article Category</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Command.Title" class="col-form-label">Title</label>
+                        <input asp-for="Command.Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-success"/>
+                        <a class="btn btn-secondary" asp-page="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
