@@ -12,10 +12,11 @@ namespace MasterBlogger.Application
         #region Constractor Injection
 
         private readonly IArticleCategoryRepository _articleCategoryRepository;
-        //private readonly IArticleCategoryValidatorService _articleCategoryValidatorService;
-        public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository)
+        private readonly IArticleCategoryValidatorService _articleCategoryValidatorService;
+        public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository, IArticleCategoryValidatorService articleCategoryValidatorService)
         {
             _articleCategoryRepository = articleCategoryRepository;
+            _articleCategoryValidatorService = articleCategoryValidatorService;
         }
 
         #endregion
@@ -36,7 +37,7 @@ namespace MasterBlogger.Application
 
         public void Create(CreateArticleCategoryCommand command)
         {
-            var articleCategory = new ArticleCategory(command.Title);
+            var articleCategory = new ArticleCategory(command.Title, _articleCategoryValidatorService);
 
             //Add Article Category
             _articleCategoryRepository.Create(articleCategory);

@@ -5,21 +5,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MasterBlogger.Infrastructure.Query;
 
 namespace MasterBlogger.Presentation.Web.Pages
 {
 	public class IndexModel : PageModel
 	{
-		private readonly ILogger<IndexModel> _logger;
+        #region Constractor Injection
 
-		public IndexModel(ILogger<IndexModel> logger)
-		{
-			_logger = logger;
-		}
+        private readonly IArticleQuery _articleQuery;
+        public IndexModel(IArticleQuery articleQuery)
+        {
+            _articleQuery = articleQuery;
+        }
 
-		public void OnGet()
-		{
+        #endregion
+		public List<ArticleQueryViewModel> Articles { get; set; }
 
-		}
+        public void OnGet()
+        {
+            Articles = _articleQuery.GetAllArticles();
+        }
 	}
 }

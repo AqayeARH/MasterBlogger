@@ -1,5 +1,4 @@
-﻿using System;
-using MasterBlogger.Domain.ArticleCategoryAgg.Exceptions;
+﻿using MasterBlogger.Domain.ArticleCategoryAgg.Exceptions;
 
 namespace MasterBlogger.Domain.ArticleCategoryAgg.Services
 {
@@ -14,7 +13,7 @@ namespace MasterBlogger.Domain.ArticleCategoryAgg.Services
         }
 
         #endregion
-        public void CheckArticleTitleExist(string title)
+        public void CheckArticleCategoryTitleExist(string title)
         {
             if (_articleCategoryRepository.IsTitleExist(title))
             {

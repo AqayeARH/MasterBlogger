@@ -21,8 +21,23 @@ namespace MasterBlogger.Domain.ArticleAgg
 
         }
 
+        private static void Validation(string title, string shortDescription, string content, long articleCategoryId)
+        {
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(shortDescription) || string.IsNullOrEmpty(content))
+            {
+                throw new ArgumentNullException();
+            }
+
+            if (articleCategoryId == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public Article(string title, string shortDescription, string image, string content, long articleCategoryId)
         {
+            Validation(title, shortDescription, content, articleCategoryId);
+
             Title = title;
             ShortDescription = shortDescription;
             Image = image;
@@ -30,6 +45,27 @@ namespace MasterBlogger.Domain.ArticleAgg
             ArticleCategoryId = articleCategoryId;
             IsDeleted = false;
             CreationDate = DateTime.Now;
+        }
+
+        public void Edit(string title, string shortDescription, string image, string content, long articleCategoryId)
+        {
+            Validation(title, shortDescription, content, articleCategoryId);
+
+            Title = title;
+            ShortDescription = shortDescription;
+            Image = image;
+            Content = content;
+            ArticleCategoryId = articleCategoryId;
+        }
+
+        public void Remove()
+        {
+            IsDeleted = true;
+        }
+
+        public void Activate()
+        {
+            IsDeleted = false;
         }
     }
 }

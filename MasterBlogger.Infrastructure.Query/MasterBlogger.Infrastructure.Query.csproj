@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MasterBlogger.Application.Contracts\MasterBlogger.Application.Contracts.csproj" />
+    <ProjectReference Include="..\MasterBlogger.Infrastructure.EfCore\MasterBlogger.Infrastructure.EfCore.csproj" />
   </ItemGroup>
 
 </Project>

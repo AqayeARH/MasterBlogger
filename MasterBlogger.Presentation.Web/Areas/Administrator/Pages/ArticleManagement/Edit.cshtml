@@ -1,0 +1,50 @@
+﻿@page "{id:long}"
+@model MasterBlogger.Presentation.Web.Areas.Administrator.Pages.ArticleManagement.EditModel
+@{
+    ViewData["Title"] = "Edit Article";
+}
+
+<div class="card">
+    <div class="card-header badge-primary">
+        <h1>Edit Article : @Model.Article.Title</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Article.Id"/>
+                    <div class="form-group">
+                        <label asp-for="Article.Title" class="col-form-label">Title</label>
+                        <input asp-for="Article.Title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Article.ArticleCategoryId" class="col-form-label">ArticleCategory</label>
+                        <select asp-for="Article.ArticleCategoryId" asp-items="@Model.ArticleCategories" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Article.ShortDescription" class="col-form-label">ShortDescription</label>
+                        <textarea rows="3" asp-for="Article.ShortDescription" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Article.Content" class="col-form-label">Content</label>
+                        <textarea rows="5" asp-for="Article.Content" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Article.ImagePath" class="col-form-label">ImagePath</label>
+                        <input asp-for="Article.ImagePath" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                        <a class="btn btn-secondary" asp-page="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

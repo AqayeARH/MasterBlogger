@@ -12,6 +12,7 @@
     <ProjectReference Include="..\MasterBlogger.Application.Contracts\MasterBlogger.Application.Contracts.csproj" />
     <ProjectReference Include="..\MasterBlogger.Application\MasterBlogger.Application.csproj" />
     <ProjectReference Include="..\MasterBlogger.Infrastructure.EfCore\MasterBlogger.Infrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\MasterBlogger.Infrastructure.Query\MasterBlogger.Infrastructure.Query.csproj" />
   </ItemGroup>
 
 </Project>

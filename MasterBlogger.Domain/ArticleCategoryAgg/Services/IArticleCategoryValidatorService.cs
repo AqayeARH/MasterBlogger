@@ -5,6 +5,6 @@
         //Domain Service
         //----------------------
 
-        void CheckArticleTitleExist(string title);
+        void CheckArticleCategoryTitleExist(string title);
     }
 }

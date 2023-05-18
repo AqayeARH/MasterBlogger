@@ -1,0 +1,49 @@
+﻿@page
+@model MasterBlogger.Presentation.Web.Areas.Administrator.Pages.ArticleManagement.CreateModel
+@{
+    ViewData["Title"] = "Create Article";
+}
+
+<div class="card">
+    <div class="card-header badge-success">
+        <h1>Create New Article</h1>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Command.Title" class="col-form-label">Title</label>
+                        <input asp-for="Command.Title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Command.ArticleCategoryId" class="col-form-label">Article Category</label>
+                        <select asp-for="Command.ArticleCategoryId" asp-items="@Model.ArticleCategories" class="form-control"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Command.ShortDescription" class="col-form-label">ShortDescription</label>
+                        <textarea rows="3" asp-for="Command.ShortDescription" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Command.Content" class="col-form-label">Content</label>
+                        <textarea rows="5" asp-for="Command.Content" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Command.ImagePath" class="col-form-label">ImagePath</label>
+                        <input asp-for="Command.ImagePath" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <a class="btn btn-secondary" asp-page="Index">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

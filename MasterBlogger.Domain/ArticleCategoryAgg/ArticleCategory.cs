@@ -23,9 +23,17 @@ namespace MasterBlogger.Domain.ArticleCategoryAgg
             }
         }
 
-        public ArticleCategory(string title)
+        protected ArticleCategory()
+        {
+            
+        }
+
+        public ArticleCategory(string title,IArticleCategoryValidatorService validatorService)
 		{
             CheckTitleNotNull(title);
+
+            validatorService.CheckArticleCategoryTitleExist(title);
+
             Title = title;
 			IsDeleted = false;
 			CreationDate = DateTime.Now;
