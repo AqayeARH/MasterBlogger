@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MasterBlogger.Infrastructure.Query
 {
@@ -13,5 +11,7 @@ namespace MasterBlogger.Infrastructure.Query
         public string CreationDate { get; set; }
         public string Image { get; set; }
         public string Content { get; set; }
+        public int CommentCount { get; set; }
+        public List<CommentQueryViewModel> Comments { get; set; }
     }
 }

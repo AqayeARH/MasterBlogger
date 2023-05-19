@@ -1,3 +1,4 @@
+using MasterBlogger.Application.Contracts.Comment;
 using MasterBlogger.Infrastructure.Query;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,14 +10,19 @@ namespace MasterBlogger.Presentation.Web.Pages
         #region Constractor Injection
 
         private readonly IArticleQuery _articleQuery;
-        public ArticleDetailsModel(IArticleQuery articleQuery)
+        private readonly ICommentApplication _commentApplication;
+        public ArticleDetailsModel(IArticleQuery articleQuery, ICommentApplication commentApplication)
         {
             _articleQuery = articleQuery;
+            _commentApplication = commentApplication;
         }
 
         #endregion
 
         public ArticleQueryViewModel Article { get; set; }
+
+        [BindProperty]
+        public AddCommentCommand Command { get; set; }
 
         public IActionResult OnGet(long id)
         {
@@ -27,6 +33,13 @@ namespace MasterBlogger.Presentation.Web.Pages
             }
 
             return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            _commentApplication.AddNewComment(Command);
+
+            return RedirectToPage("ArticleDetails", new { id = Command.ArticleId });
         }
     }
 }

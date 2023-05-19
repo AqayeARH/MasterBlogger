@@ -1,10 +1,12 @@
 ﻿using MasterBlogger.Application;
 using MasterBlogger.Application.Contracts.Article;
 using MasterBlogger.Application.Contracts.ArticleCategory;
+using MasterBlogger.Application.Contracts.Comment;
 using MasterBlogger.Domain.ArticleAgg;
 using MasterBlogger.Domain.ArticleAgg.Services;
 using MasterBlogger.Domain.ArticleCategoryAgg;
 using MasterBlogger.Domain.ArticleCategoryAgg.Services;
+using MasterBlogger.Domain.CommentAgg;
 using MasterBlogger.Infrastructure.EfCore;
 using MasterBlogger.Infrastructure.EfCore.Repositories;
 using MasterBlogger.Infrastructure.Query;
@@ -36,6 +38,13 @@ namespace MasterBlogger.Infrastructure.Core
             #region Queries
 
             services.AddTransient<IArticleQuery, ArticleQuery>();
+
+            #endregion
+
+            #region Comment
+
+            services.AddTransient<ICommentApplication, CommentApplication>();
+            services.AddTransient<ICommentRepository,CommentRepository>();
 
             #endregion
 

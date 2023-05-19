@@ -1,0 +1,87 @@
+﻿@page
+@using MasterBlogger.Domain.CommentAgg
+@model MasterBlogger.Presentation.Web.Areas.Administrator.Pages.CommentManagement.IndexModel
+@{
+    ViewData["Title"] = "Comment List";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h1 class="float-left">Comments List</h1>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Article</th>
+                    <th>Creation Date</th>
+                    <th>Status</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Comments)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.Message</td>
+                        <td><a asp-page="/ArticleDetails" asp-route-id="@item.ArticleId">@item.ArticleTitle</a></td>
+                        <td>@item.CreationDate</td>
+                        <td>
+                            @if (item.Status == CommentStatuses.New)
+                            {
+                               <i class="fa fa-eye"></i>
+                            }
+                            @if (item.Status == CommentStatuses.Confirmed)
+                            {
+                                <i class="fa fa-check text-success"></i>
+                            }
+                            @if (item.Status == CommentStatuses.Canceled)
+                            {
+                                <i class="fa fa-remove text-danger"></i>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Status == CommentStatuses.New)
+                            {
+                                @* Confirm Action *@
+                                <form class="float-left" method="post" asp-page-handler="Confirm">
+                                    <button class="btn btn-success btn-sm">Confirm</button>
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                </form>
+                                @* Cancel Action *@
+                                <form class="float-left" method="post" asp-page-handler="Cancel">
+                                    <button class="btn btn-danger btn-sm">Cancel</button>
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                </form>
+                            }
+                            @if (item.Status == CommentStatuses.Confirmed)
+                            {
+                                @* Cancel Action *@
+                                <form class="float-left" method="post" asp-page-handler="Cancel">
+                                    <button class="btn btn-danger btn-sm">Cancel</button>
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                </form>
+                            }
+                            @if (item.Status == CommentStatuses.Canceled)
+                            {
+                                @* Confirm Action *@
+                                <form class="float-left" method="post" asp-page-handler="Confirm">
+                                    <button class="btn btn-success btn-sm">Confirm</button>
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

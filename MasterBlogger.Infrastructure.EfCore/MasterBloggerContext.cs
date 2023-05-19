@@ -1,5 +1,6 @@
 ﻿using MasterBlogger.Domain.ArticleAgg;
 using MasterBlogger.Domain.ArticleCategoryAgg;
+using MasterBlogger.Domain.CommentAgg;
 using MasterBlogger.Infrastructure.EfCore.FluentApi;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ namespace MasterBlogger.Infrastructure.EfCore
 
 		public DbSet<ArticleCategory> ArticleCategories { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
 		#endregion
 
@@ -23,11 +25,19 @@ namespace MasterBlogger.Infrastructure.EfCore
 		{
 			#region Fluent Api Configuration
 
+            var assembly = typeof(ArticleFluentApi).Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(assembly);
+
+			/*
 			//Article Category Fluent Api
 			modelBuilder.ApplyConfiguration(new ArticleCategoryFluentApi());
 
             //Article Fluent Api
             modelBuilder.ApplyConfiguration(new ArticleFluentApi());
+
+            //Comment Fluent Api
+            modelBuilder.ApplyConfiguration(new CommentFluentApi());
+			*/
 
             #endregion
 
