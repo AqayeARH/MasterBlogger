@@ -2,29 +2,25 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using _01.Framework.Infrastructure;
 using MasterBlogger.Application.Contracts.Comment;
 using Microsoft.EntityFrameworkCore;
 
 namespace MasterBlogger.Infrastructure.EfCore.Repositories
 {
-    public class CommentRepository : ICommentRepository
+    public class CommentRepository : BaseRepository<long, Comment>, ICommentRepository
     {
         #region Constractor Injection
 
         private readonly MasterBloggerContext _context;
-        public CommentRepository(MasterBloggerContext context)
+        public CommentRepository(MasterBloggerContext context) : base(context)
         {
             _context = context;
         }
 
         #endregion
 
-        public void Create(Comment entity)
-        {
-            _context.Comments.Add(entity);
-        }
-
-        public List<CommentViewModel> GetAll()
+        public List<CommentViewModel> GetList()
         {
             return _context.Comments
                 .Include(x => x.Article)
@@ -41,6 +37,12 @@ namespace MasterBlogger.Infrastructure.EfCore.Repositories
                 }).ToList();
         }
 
+        /*
+        public void Create(Comment entity)
+        {
+            _context.Comments.Add(entity);
+        }
+
         public Comment GetBy(long id)
         {
             return _context.Comments.FirstOrDefault(c => c.Id == id);
@@ -55,5 +57,6 @@ namespace MasterBlogger.Infrastructure.EfCore.Repositories
         {
             _context.SaveChanges();
         }
+        */
     }
 }

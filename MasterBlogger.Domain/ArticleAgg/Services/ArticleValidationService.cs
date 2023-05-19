@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MasterBlogger.Domain.ArticleCategoryAgg.Exceptions;
+﻿using MasterBlogger.Domain.ArticleCategoryAgg.Exceptions;
 
 namespace MasterBlogger.Domain.ArticleAgg.Services
 {
@@ -19,7 +16,7 @@ namespace MasterBlogger.Domain.ArticleAgg.Services
 
         public void CheckArticleTitleExist(string title)
         {
-            if (_articleRepository.IsArticleTitleExist(title))
+            if (_articleRepository.IsExist(x=>x.Title == title))
             {
                 throw new AlreadyRecordExistException("Article Is Exist");
             }

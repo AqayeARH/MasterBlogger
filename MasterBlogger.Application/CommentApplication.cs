@@ -1,5 +1,6 @@
 ﻿using MasterBlogger.Application.Contracts.Comment;
 using System.Collections.Generic;
+using _01.Framework.Infrastructure.UnitOfWork;
 using MasterBlogger.Domain.CommentAgg;
 
 namespace MasterBlogger.Application
@@ -9,23 +10,27 @@ namespace MasterBlogger.Application
         #region Constractor Injection
 
         private readonly ICommentRepository _commentRepository;
-        public CommentApplication(ICommentRepository commentRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CommentApplication(ICommentRepository commentRepository, IUnitOfWork unitOfWork)
         {
             _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
         }
 
         #endregion
 
         public void AddNewComment(AddCommentCommand command)
         {
+            _unitOfWork.BeginTran();
             var comment = new Comment(command.Name, command.Email, command.Message, command.ArticleId);
             _commentRepository.Create(comment);
-            _commentRepository.Save();
+            _unitOfWork.CommitTran();
+            //_commentRepository.Save();
         }
 
         public List<CommentViewModel> List()
         {
-            return _commentRepository.GetAll();
+            return _commentRepository.GetList();
         }
 
         public void Confirm(long id)
@@ -33,9 +38,11 @@ namespace MasterBlogger.Application
             var comment = _commentRepository.GetBy(id);
             if (comment != null)
             {
+                _unitOfWork.BeginTran();
                 comment.Confirm();
                 _commentRepository.Update(comment);
-                _commentRepository.Save();
+                //_commentRepository.Save();
+                _unitOfWork.CommitTran();
             }
         }
 
@@ -44,9 +51,11 @@ namespace MasterBlogger.Application
             var comment = _commentRepository.GetBy(id);
             if (comment != null)
             {
+                _unitOfWork.BeginTran();
                 comment.Cancel();
                 _commentRepository.Update(comment);
-                _commentRepository.Save();
+                //_commentRepository.Save();
+                _unitOfWork.CommitTran();
             }
         }
     }

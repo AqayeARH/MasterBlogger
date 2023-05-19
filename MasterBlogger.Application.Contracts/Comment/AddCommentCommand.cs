@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MasterBlogger.Application.Contracts.Comment
+﻿namespace MasterBlogger.Application.Contracts.Comment
 {
     public class AddCommentCommand
     {

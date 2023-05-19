@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using _01.Framework.Domain;
 using MasterBlogger.Domain.ArticleAgg;
 
 namespace MasterBlogger.Domain.CommentAgg
 {
-    public class Comment
+    public class Comment : BaseDomain<long>
     {
-        public long Id { get; private set; }
+        // Placed in BaseDomain 
+        //public long Id { get; private set; }
+
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Message { get; private set; }
-        public DateTime CreationDate { get; private set; }
+
+        // Placed in BaseDomain 
+        //public DateTime CreationDate { get; private set; }
+
         public int Status { get; private set; }  // New = 0; Confirmed = 1; Canceled = 2;
 
         public long ArticleId { get; private set; }
@@ -28,7 +31,7 @@ namespace MasterBlogger.Domain.CommentAgg
             Email = email;
             Message = message;
             ArticleId = articleId;
-            CreationDate = DateTime.Now;
+            //CreationDate = DateTime.Now;
             Status = CommentStatuses.New;
         }
 

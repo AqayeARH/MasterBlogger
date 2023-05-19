@@ -15,7 +15,7 @@ namespace MasterBlogger.Domain.ArticleCategoryAgg.Services
         #endregion
         public void CheckArticleCategoryTitleExist(string title)
         {
-            if (_articleCategoryRepository.IsTitleExist(title))
+            if (_articleCategoryRepository.IsExist(x=>x.Title == title))
             {
                 throw new AlreadyRecordExistException("This Title Is Already Exist");
             }

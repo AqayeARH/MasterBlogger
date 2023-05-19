@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using _01.Framework.Infrastructure;
 using MasterBlogger.Application.Contracts.Article;
 using Microsoft.EntityFrameworkCore;
 
 namespace MasterBlogger.Infrastructure.EfCore.Repositories
 {
-    public class ArticleRepository : IArticleRepository
+    public class ArticleRepository : BaseRepository<long, Article>, IArticleRepository
     {
         #region Constractor Injection
 
         private readonly MasterBloggerContext _context;
-        public ArticleRepository(MasterBloggerContext context)
+        public ArticleRepository(MasterBloggerContext context) : base(context)
         {
             _context = context;
         }
 
         #endregion
 
-        public List<ArticleViewModel> GetAll()
+        public List<ArticleViewModel> GetList()
         {
             return _context.Articles
                 .Include(a => a.ArticleCategory)
@@ -33,6 +34,7 @@ namespace MasterBlogger.Infrastructure.EfCore.Repositories
                 }).ToList();
         }
 
+        /*
         public void Create(Article entity)
         {
             _context.Articles.Add(entity);
@@ -57,5 +59,6 @@ namespace MasterBlogger.Infrastructure.EfCore.Repositories
         {
             _context.SaveChanges();
         }
+        */
     }
 }

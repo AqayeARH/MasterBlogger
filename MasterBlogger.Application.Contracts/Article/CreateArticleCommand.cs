@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MasterBlogger.Application.Contracts.Article
+﻿namespace MasterBlogger.Application.Contracts.Article
 {
     public class CreateArticleCommand
     {

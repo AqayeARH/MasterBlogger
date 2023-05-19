@@ -1,4 +1,5 @@
-﻿using MasterBlogger.Application;
+﻿using _01.Framework.Infrastructure.UnitOfWork;
+using MasterBlogger.Application;
 using MasterBlogger.Application.Contracts.Article;
 using MasterBlogger.Application.Contracts.ArticleCategory;
 using MasterBlogger.Application.Contracts.Comment;
@@ -9,6 +10,7 @@ using MasterBlogger.Domain.ArticleCategoryAgg.Services;
 using MasterBlogger.Domain.CommentAgg;
 using MasterBlogger.Infrastructure.EfCore;
 using MasterBlogger.Infrastructure.EfCore.Repositories;
+using MasterBlogger.Infrastructure.EfCore.UnitOfWork;
 using MasterBlogger.Infrastructure.Query;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +47,12 @@ namespace MasterBlogger.Infrastructure.Core
 
             services.AddTransient<ICommentApplication, CommentApplication>();
             services.AddTransient<ICommentRepository,CommentRepository>();
+
+            #endregion
+
+            #region Unit Of Work
+
+            services.AddTransient<IUnitOfWork, UnitOfWorkEf>();
 
             #endregion
 

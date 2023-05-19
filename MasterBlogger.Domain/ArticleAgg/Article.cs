@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using _01.Framework.Domain;
 using MasterBlogger.Domain.ArticleCategoryAgg;
 using MasterBlogger.Domain.CommentAgg;
 
 namespace MasterBlogger.Domain.ArticleAgg
 {
-    public class Article
+    public class Article : BaseDomain<long>
     {
-        public long Id { get; private set; }
+        // Placed in BaseDomain 
+        //public long Id { get; private set; }
+
         public string Title { get; private set; }
         public string ShortDescription { get; private set; }
         public string Image { get; private set; }
         public string Content { get; private set; }
         public bool IsDeleted { get; private set; }
-        public DateTime CreationDate { get; private set; }
+
+        // Placed in BaseDomain 
+        //public DateTime CreationDate { get; private set; }
 
         public long ArticleCategoryId { get; private set; }
         public ArticleCategory ArticleCategory { get; private set; }
@@ -48,7 +53,7 @@ namespace MasterBlogger.Domain.ArticleAgg
             Content = content;
             ArticleCategoryId = articleCategoryId;
             IsDeleted = false;
-            CreationDate = DateTime.Now;
+            //CreationDate = DateTime.Now;   // Placed in BaseDomain 
             Comments = new List<Comment>();
         }
 

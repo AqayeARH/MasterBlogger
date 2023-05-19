@@ -1,28 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using _01.Framework.Infrastructure;
 using MasterBlogger.Domain.ArticleCategoryAgg;
 
 namespace MasterBlogger.Infrastructure.EfCore.Repositories
 {
-    public class ArticleCategoryRepository : IArticleCategoryRepository
+    public class ArticleCategoryRepository : BaseRepository<long, ArticleCategory>, IArticleCategoryRepository
     {
         #region Constractor Injection
 
         private readonly MasterBloggerContext _context;
-        public ArticleCategoryRepository(MasterBloggerContext context)
+        public ArticleCategoryRepository(MasterBloggerContext context) : base(context)
         {
             _context = context;
         }
 
         #endregion
 
-        public List<ArticleCategory> GetAll()
-        {
-            return _context.ArticleCategories
-                .OrderByDescending(x => x.Id)
-                .ToList();
-        }
-
+        /*
         public void Create(ArticleCategory entity)
         {
             _context.ArticleCategories.Add(entity);
@@ -47,5 +40,6 @@ namespace MasterBlogger.Infrastructure.EfCore.Repositories
         {
             return _context.ArticleCategories.Any(x => x.Title == title);
         }
+        */
     }
 }

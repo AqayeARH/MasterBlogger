@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using _01.Framework.Infrastructure.UnitOfWork;
 using MasterBlogger.Application.Contracts.ArticleCategory;
 using MasterBlogger.Domain.ArticleCategoryAgg;
 using MasterBlogger.Domain.ArticleCategoryAgg.Services;
@@ -13,10 +14,12 @@ namespace MasterBlogger.Application
 
         private readonly IArticleCategoryRepository _articleCategoryRepository;
         private readonly IArticleCategoryValidatorService _articleCategoryValidatorService;
-        public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository, IArticleCategoryValidatorService articleCategoryValidatorService)
+        private readonly IUnitOfWork _unitOfWork;
+        public ArticleCategoryApplication(IArticleCategoryRepository articleCategoryRepository, IArticleCategoryValidatorService articleCategoryValidatorService, IUnitOfWork unitOfWork)
         {
             _articleCategoryRepository = articleCategoryRepository;
             _articleCategoryValidatorService = articleCategoryValidatorService;
+            _unitOfWork = unitOfWork;
         }
 
         #endregion
@@ -26,31 +29,36 @@ namespace MasterBlogger.Application
             var articleCategories = _articleCategoryRepository.GetAll();
 
             //Map To Article Category View Model
-            return articleCategories.Select(x => new ArticleCategoryViewModel()
-            {
-                IsDeleted = x.IsDeleted,
-                CreationDate = x.CreationDate.ToString(CultureInfo.InvariantCulture),
-                Id = x.Id,
-                Title = x.Title,
-            }).ToList();
+            return articleCategories
+                .OrderByDescending(x => x.Id)
+                .Select(x => new ArticleCategoryViewModel()
+                {
+                    IsDeleted = x.IsDeleted,
+                    CreationDate = x.CreationDate.ToString(CultureInfo.InvariantCulture),
+                    Id = x.Id,
+                    Title = x.Title,
+                }).ToList();
         }
 
         public void Create(CreateArticleCategoryCommand command)
         {
+            _unitOfWork.BeginTran();
             var articleCategory = new ArticleCategory(command.Title, _articleCategoryValidatorService);
 
             //Add Article Category
             _articleCategoryRepository.Create(articleCategory);
-            _articleCategoryRepository.Save();
+            //_articleCategoryRepository.Save();
+            _unitOfWork.CommitTran();
         }
 
         public void Rename(RenameArticleCategoryCommand command)
         {
             var articleCategory = _articleCategoryRepository.GetBy(command.Id);
-
+            _unitOfWork.BeginTran();
             //The Operation Of Rename Of The Article Category
             articleCategory.Rename(command.Title);
-            _articleCategoryRepository.Save();
+            //_articleCategoryRepository.Save();
+            _unitOfWork.CommitTran();
         }
 
         public RenameArticleCategoryCommand GetForRename(long id)
@@ -73,17 +81,21 @@ namespace MasterBlogger.Application
         public void Remove(long id)
         {
             var articleCategory = _articleCategoryRepository.GetBy(id);
+            _unitOfWork.BeginTran();
             articleCategory.Remove();
             _articleCategoryRepository.Update(articleCategory);
-            _articleCategoryRepository.Save();
+            _unitOfWork.CommitTran();
+            //_articleCategoryRepository.Save();
         }
 
         public void Activate(long id)
         {
             var articleCategory = _articleCategoryRepository.GetBy(id);
+            _unitOfWork.BeginTran();
             articleCategory.Activate();
             _articleCategoryRepository.Update(articleCategory);
-            _articleCategoryRepository.Save();
+            //_articleCategoryRepository.Save();
+            _unitOfWork.CommitTran();
         }
     }
 }

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\01.Framework\01.Framework.csproj" />
     <ProjectReference Include="..\MasterBlogger.Application.Contracts\MasterBlogger.Application.Contracts.csproj" />
   </ItemGroup>
 

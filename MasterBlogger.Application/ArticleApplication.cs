@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _01.Framework.Infrastructure.UnitOfWork;
 using MasterBlogger.Application.Contracts.Article;
 using MasterBlogger.Domain.ArticleAgg;
 
@@ -9,25 +10,29 @@ namespace MasterBlogger.Application
         #region Constractor Injection
 
         private readonly IArticleRepository _articleRepository;
-        public ArticleApplication(IArticleRepository articleRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ArticleApplication(IArticleRepository articleRepository, IUnitOfWork unitOfWork)
         {
             _articleRepository = articleRepository;
+            _unitOfWork = unitOfWork;
         }
 
         #endregion
 
         public List<ArticleViewModel> List()
         {
-            return _articleRepository.GetAll();
+            return _articleRepository.GetList();
         }
 
         public void Create(CreateArticleCommand command)
         {
+            _unitOfWork.BeginTran();
             var article = new Article(command.Title, command.ShortDescription, command.ImagePath,
                 command.Content,
                 command.ArticleCategoryId);
             _articleRepository.Create(article);
-            _articleRepository.Save();
+            //_articleRepository.Save();
+            _unitOfWork.CommitTran();
         }
 
         public void Edit(EditArticleCommand command)
@@ -36,11 +41,13 @@ namespace MasterBlogger.Application
 
             if (article != null)
             {
+                _unitOfWork.BeginTran();
                 article.Edit(command.Title, command.ShortDescription, command.ImagePath, command.Content,
                     command.ArticleCategoryId);
 
                 _articleRepository.Update(article);
-                _articleRepository.Save();
+                //_articleRepository.Save();
+                _unitOfWork.CommitTran();
             }
         }
 
@@ -68,9 +75,11 @@ namespace MasterBlogger.Application
             var article = _articleRepository.GetBy(id);
             if (article != null)
             {
+                _unitOfWork.BeginTran();
                 article.Remove();
                 _articleRepository.Update(article);
-                _articleRepository.Save();
+                //_articleRepository.Save();
+                _unitOfWork.CommitTran();
             }
         }
 
@@ -79,9 +88,11 @@ namespace MasterBlogger.Application
             var article = _articleRepository.GetBy(id);
             if (article != null)
             {
+                _unitOfWork.BeginTran();
                 article.Activate();
                 _articleRepository.Update(article);
-                _articleRepository.Save();
+                //_articleRepository.Save();
+                _unitOfWork.CommitTran();
             }
         }
     }
